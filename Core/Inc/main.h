@@ -36,10 +36,7 @@ extern "C" {
 
 /* Exported types ------------------------------------------------------------*/
 /* USER CODE BEGIN ET */
-typedef struct {
-    uint16_t size;     
-    char *text;   
-}textSizeMorse;
+
 /* USER CODE END ET */
 
 /* Exported constants --------------------------------------------------------*/
