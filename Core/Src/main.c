@@ -23,7 +23,7 @@
 /* USER CODE BEGIN Includes */
 
 #include "Morse.h"
-#include <stdlib.h> 
+
 /* USER CODE END Includes */
 
 /* Private typedef -----------------------------------------------------------*/
@@ -42,8 +42,6 @@
 /* USER CODE END PM */
 
 /* Private variables ---------------------------------------------------------*/
-TIM_HandleTypeDef htim11;
-
 UART_HandleTypeDef huart2;
 DMA_HandleTypeDef hdma_usart2_tx;
 
@@ -55,7 +53,6 @@ DMA_HandleTypeDef hdma_usart2_tx;
 void SystemClock_Config(void);
 static void MX_GPIO_Init(void);
 static void MX_DMA_Init(void);
-static void MX_TIM11_Init(void);
 static void MX_USART2_UART_Init(void);
 /* USER CODE BEGIN PFP */
 
@@ -72,7 +69,6 @@ static void MX_USART2_UART_Init(void);
   */
 int main(void)
 {
-
   /* USER CODE BEGIN 1 */
 
   /* USER CODE END 1 */
@@ -96,25 +92,27 @@ int main(void)
   /* Initialize all configured peripherals */
   MX_GPIO_Init();
   MX_DMA_Init();
-  MX_TIM11_Init();
   MX_USART2_UART_Init();
   /* USER CODE BEGIN 2 */
+	struct strS{
+		char* text;
+		uint16_t i;
+	};
+	char strg[]="ggggg";
+struct strS str={strg,5};
 	
   /* USER CODE END 2 */
 
   /* Infinite loop */
   /* USER CODE BEGIN WHILE */
-	
-	textSizeMorse textMorseS = textInMorse("Hello World13");
   while (1)
   {
     /* USER CODE END WHILE */
 
     /* USER CODE BEGIN 3 */
-		HAL_UART_Transmit_DMA(&huart2, (uint8_t*)textMorseS.text , textMorseS.size);        
-    HAL_Delay(100);
-		textLedMorse(&htim11,textMorseS.text, 5);
-		
+	 	HAL_UART_Transmit_DMA(&huart2,(uint8_t*)str.text,str.i);
+		HAL_Delay(200);
+		//sendMorse("HELLO");
   }
   /* USER CODE END 3 */
 }
@@ -158,37 +156,6 @@ void SystemClock_Config(void)
   {
     Error_Handler();
   }
-}
-
-/**
-  * @brief TIM11 Initialization Function
-  * @param None
-  * @retval None
-  */
-static void MX_TIM11_Init(void)
-{
-
-  /* USER CODE BEGIN TIM11_Init 0 */
-
-  /* USER CODE END TIM11_Init 0 */
-
-  /* USER CODE BEGIN TIM11_Init 1 */
-
-  /* USER CODE END TIM11_Init 1 */
-  htim11.Instance = TIM11;
-  htim11.Init.Prescaler = 15999;
-  htim11.Init.CounterMode = TIM_COUNTERMODE_UP;
-  htim11.Init.Period = 1000;
-  htim11.Init.ClockDivision = TIM_CLOCKDIVISION_DIV1;
-  htim11.Init.AutoReloadPreload = TIM_AUTORELOAD_PRELOAD_DISABLE;
-  if (HAL_TIM_Base_Init(&htim11) != HAL_OK)
-  {
-    Error_Handler();
-  }
-  /* USER CODE BEGIN TIM11_Init 2 */
-
-  /* USER CODE END TIM11_Init 2 */
-
 }
 
 /**
@@ -248,8 +215,8 @@ static void MX_DMA_Init(void)
 static void MX_GPIO_Init(void)
 {
   GPIO_InitTypeDef GPIO_InitStruct = {0};
-  /* USER CODE BEGIN MX_GPIO_Init_1 */
-  /* USER CODE END MX_GPIO_Init_1 */
+/* USER CODE BEGIN MX_GPIO_Init_1 */
+/* USER CODE END MX_GPIO_Init_1 */
 
   /* GPIO Ports Clock Enable */
   __HAL_RCC_GPIOC_CLK_ENABLE();
@@ -265,8 +232,8 @@ static void MX_GPIO_Init(void)
   GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_LOW;
   HAL_GPIO_Init(GPIOC, &GPIO_InitStruct);
 
-  /* USER CODE BEGIN MX_GPIO_Init_2 */
-  /* USER CODE END MX_GPIO_Init_2 */
+/* USER CODE BEGIN MX_GPIO_Init_2 */
+/* USER CODE END MX_GPIO_Init_2 */
 }
 
 /* USER CODE BEGIN 4 */
